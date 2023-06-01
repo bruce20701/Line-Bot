@@ -25,11 +25,9 @@ def linebot():
         type = json_data['events'][0]['message']['type']     # 取得 LINe 收到的訊息類型
         if type=='text':
             msg = json_data['events'][0]['message']['text']  # 取得 LINE 收到的文字訊息
-            print(msg)                                       # 印出內容
             reply = msg
         else:
             reply = '你傳的不是文字呦～'
-        print(reply)
         line_bot_api.reply_message(tk,TextSendMessage(reply))# 回傳訊息
     except:
         print(body)                                          # 如果發生錯誤，印出收到的內容
