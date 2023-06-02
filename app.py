@@ -18,7 +18,7 @@ curNode = headNode
 line_bot_api = LineBotApi('c/2axBtAYZQkLSDHOVVnBLXdJLs0RabigC1tvKtEbNb8/8P6f14yLRrfAQKKiUH6KgcdQp+bDHEyI7qP0/zHpvJflIKqIFRl/l2fbVvQS3txUy1LcNpHR/iCIjjmshTzt5zQQrjEGbsLx2MorQ6CcAdB04t89/1O/w1cDnyilFU=')
 
 #讀取課程資訊
-with open('course info.csv', mode='r') as file:
+with open('test.csv', mode='r') as file:
     reader = csv.DictReader(file)
     for row in reader:
         if courseList == None:
