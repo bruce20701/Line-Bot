@@ -1,6 +1,7 @@
 from flask import Flask, request
 from linebot import LineBotApi, WebhookHandler
 from linebot.models import TextSendMessage   # 載入 TextSendMessage 模組
+from linebot.models import StickerSendMessage   # 載入 StickerSendMessage 模組
 import json
 
 app = Flask(__name__)
@@ -16,9 +17,10 @@ def linebot():
         signature = request.headers['X-Line-Signature']
         handler.handle(body, signature)
         tk = json_data['events'][0]['replyToken']         # 取得 reply token
-        msg = json_data['events'][0]['message']['text']   # 取得使用者發送的訊息
-        text_message = TextSendMessage(text=msg)          # 設定回傳同樣的訊息
-        line_bot_api.reply_message(tk,text_message)       # 回傳訊息
+        stickerId = json_data['events'][0]['message']['stickerId'] # 取得 stickerId
+        packageId = json_data['events'][0]['message']['packageId'] # 取得 packageId
+        sticker_message = StickerSendMessage(sticker_id=10855, package_id=789) # 設定要回傳的表情貼圖
+        line_bot_api.reply_message(tk,sticker_message)  # 回傳訊息
     except:
         print('error')
     return 'OK'
