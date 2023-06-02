@@ -32,7 +32,7 @@ with open('test.csv', mode='r') as file:
    curNode = headNode
 
 def checkTime():
-   global curNode, headNode
+   global curNode, headNode, line_bot_api
    while True:
       #讀取LinedList物件
       tempNode = curNode.value
