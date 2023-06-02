@@ -20,15 +20,16 @@ line_bot_api = LineBotApi('c/2axBtAYZQkLSDHOVVnBLXdJLs0RabigC1tvKtEbNb8/8P6f14yL
 
 #讀取課程資訊
 with open('test.csv', mode='r') as file:
-    reader = csv.DictReader(file)
-    for row in reader:
-        if courseList == None:
-           courseList = LinkedList(Course(row['name'], row['day'], row['endTime'], row['location']))
-           headNode = courseList
-           curNode = headNode
-        else:
-           curNode.next = LinkedList(Course(row['name'], row['day'], row['endTime'], row['location']))
-           curNode = curNode.next
+   reader = csv.DictReader(file)
+   for row in reader:
+      if courseList == None:
+         courseList = LinkedList(Course(row['name'], row['day'], row['startTime'], row['endTime'], row['location']))
+         headNode = courseList
+         curNode = headNode
+      else:
+         curNode.next = LinkedList(Course(row['name'], row['day'], row['startTime'], row['endTime'], row['location']))
+         curNode = curNode.next
+   curNode = headNode
 
 def checkTime():
    global curNode, headNode
@@ -59,19 +60,19 @@ def checkTime():
 #接受使用者訊息(還沒動工)
 @app.route("/")
 def home():
-  global line_bot_api
-  try:
-    # 網址被執行時，等同使用 GET 方法發送 request，觸發 LINE Message API 的 push_message 方法
-    line_bot_api.push_message('U3b706ee724da7f1ccaf51c2fb357d507', TextSendMessage(text='使用者ID讀取成功'))
-    return 'OK'
-  except:
-    print('error')
+   global line_bot_api
+   try:
+      # 網址被執行時，等同使用 GET 方法發送 request，觸發 LINE Message API 的 push_message 方法
+      line_bot_api.push_message('U3b706ee724da7f1ccaf51c2fb357d507', TextSendMessage(text='使用者ID讀取成功'))
+      return 'OK'
+   except:
+      print('error')
 
 if __name__ == "__main__":
    # 啟動應用程式
-   app_thread = threading.Thread(target=app.run)
+   app_thread = threading.Thread(target=app.run())
    app_thread.start()
 
    # 定期偵測時間，每秒檢查一次
-   check_thread = threading.Thread(target=checkTime)
+   check_thread = threading.Thread(target=checkTime())
    check_thread.start()
