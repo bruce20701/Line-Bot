@@ -1,37 +1,27 @@
 from flask import Flask, request
-
-# 載入 json 標準函式庫，處理回傳的資料格式
-import json
-
-# 載入 LINE Message API 相關函式庫
 from linebot import LineBotApi, WebhookHandler
-from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import TextSendMessage   # 載入 TextSendMessage 模組
+import json
 
 app = Flask(__name__)
 
 @app.route("/", methods=['POST'])
 def linebot():
-    body = request.get_data(as_text=True)                    # 取得收到的訊息內容
+    body = request.get_data(as_text=True)
+    json_data = json.loads(body)
+    print(json_data)
     try:
-        json_data = json.loads(body)                         # json 格式化訊息內容
-        access_token = 'c/2axBtAYZQkLSDHOVVnBLXdJLs0RabigC1tvKtEbNb8/8P6f14yLRrfAQKKiUH6KgcdQp+bDHEyI7qP0/zHpvJflIKqIFRl/l2fbVvQS3txUy1LcNpHR/iCIjjmshTzt5zQQrjEGbsLx2MorQ6CcAdB04t89/1O/w1cDnyilFU='
-        secret = '124fa4bcf00b1166c14eeea6bc6f2d00'
-        line_bot_api = LineBotApi(access_token)              # 確認 token 是否正確
-        handler = WebhookHandler(secret)                     # 確認 secret 是否正確
-        signature = request.headers['X-Line-Signature']      # 加入回傳的 headers
-        handler.handle(body, signature)                      # 綁定訊息回傳的相關資訊
-        tk = json_data['events'][0]['replyToken']            # 取得回傳訊息的 Token
-        type = json_data['events'][0]['message']['type']     # 取得 LINe 收到的訊息類型
-        if type=='text':
-            msg = json_data['events'][0]['message']['text']  # 取得 LINE 收到的文字訊息
-            reply = msg
-        else:
-            reply = '你傳的不是文字呦～'
-        line_bot_api.reply_message(tk,TextSendMessage(reply))# 回傳訊息
+        line_bot_api = LineBotApi('c/2axBtAYZQkLSDHOVVnBLXdJLs0RabigC1tvKtEbNb8/8P6f14yLRrfAQKKiUH6KgcdQp+bDHEyI7qP0/zHpvJflIKqIFRl/l2fbVvQS3txUy1LcNpHR/iCIjjmshTzt5zQQrjEGbsLx2MorQ6CcAdB04t89/1O/w1cDnyilFU=') #Channel access token
+        handler = WebhookHandler('124fa4bcf00b1166c14eeea6bc6f2d00') #LINE Channel secret
+        signature = request.headers['X-Line-Signature']
+        handler.handle(body, signature)
+        tk = json_data['events'][0]['replyToken']         # 取得 reply token
+        msg = json_data['events'][0]['message']['text']   # 取得使用者發送的訊息
+        text_message = TextSendMessage(text=msg)          # 設定回傳同樣的訊息
+        line_bot_api.reply_message(tk,text_message)       # 回傳訊息
     except:
-        print(body)                                          # 如果發生錯誤，印出收到的內容
-    return 'OK'                                              # 驗證 Webhook 使用，不能省略
+        print('error')
+    return 'OK'
 
 if __name__ == "__main__":
     app.run()
