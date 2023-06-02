@@ -47,8 +47,8 @@ def checkTime():
       nodeTime = datetime.datetime.strptime(tempNode.startTime, "%H:%M")
       nodeHour = nodeTime.hour
       nodeMinute = nodeTime.minute
-      # print(f"系統時間： Hour:{curHour} Minute:{curMinute}")
-      # print(f"鏈結時間： Hour:{nodeHour} Minute:{nodeMinute}")
+      print(f"系統時間： Hour:{curHour} Minute:{curMinute}")
+      print(f"鏈結時間： Hour:{nodeHour} Minute:{nodeMinute}")
       if curWeekday == tempNode.day and (curHour * 60 + curMinute) - (nodeHour * 60 + nodeMinute) == 0:
          messageStr = f"課程通知\n課程名稱：{tempNode.name}\n教室：{tempNode.location}\n上課時間：{tempNode.startTime}\n下課時間：{tempNode.endTime}\n祝您上課愉快！"
          line_bot_api.push_message('U3b706ee724da7f1ccaf51c2fb357d507', TextSendMessage(text=messageStr))
@@ -76,5 +76,3 @@ if __name__ == "__main__":
    # 啟動應用程式
    app_thread = threading.Thread(target=app.run)
    app_thread.start()
-
-   
