@@ -58,6 +58,7 @@ while True:
       break
    curNode = curNode.next
 
+# 檢查課程時間
 def checkTime():
    global headNode, curNode, line_bot_api
    while True:
