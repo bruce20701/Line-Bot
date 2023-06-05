@@ -53,9 +53,10 @@ while True:
    nodeTime = datetime.datetime.strptime(tempNode.startTime, "%H:%M")
    nodeHour = nodeTime.hour
    nodeMinute = nodeTime.minute
+   print((nodeHour * 60 + nodeMinute) - (curHour * 60 + curMinute))
    if curWeekday == 6 or curWeekday == 7:
       break
-   if curWeekday == tempNode.day and (curHour * 60 + curMinute) - (nodeHour * 60 + nodeMinute) > 30:
+   if int(curWeekday) == int(tempNode.day) and (nodeHour * 60 + nodeMinute) - (curHour * 60 + curMinute) > 30:
       break
    curNode = curNode.next
 
@@ -74,13 +75,13 @@ def checkTime():
       curWeekday = curTime.weekday() + 1
       curHour = curTime.hour
       curMinute = curTime.minute
-      print(f"系統時間： Week: {curWeekday} Hour: {curHour} Minute: {curMinute}")
+      # print(f"系統時間： Week: {curWeekday} Hour: {curHour} Minute: {curMinute}")
       # 將LinkedList的資料轉成時間
       nodeTime = datetime.datetime.strptime(tempNode.startTime, "%H:%M")
       nodeHour = nodeTime.hour
       nodeMinute = nodeTime.minute
-      print(f"課程時間： Week: {tempNode.day} Hour: {nodeHour} Minute: {nodeMinute}")
-      print()
+      # print(f"課程時間： Week: {tempNode.day} Hour: {nodeHour} Minute: {nodeMinute}")
+      # print()
       #判斷通知時間
       if int(curWeekday) == int(tempNode.day) and (nodeHour * 60 + nodeMinute) - (curHour * 60 + curMinute) == 30:
          messageStr = tempNode
