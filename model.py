@@ -7,7 +7,7 @@ class Course:
         self.location = location
     
     def __str__(self):
-        f"課程通知\n課程名稱：{self.name}\n教室：{self.location}\n上課時間：{self.startTime}\n下課時間：{self.endTime}\n祝您上課愉快！"
+        return f"課程通知\n課程名稱：{self.name}\n教室：{self.location}\n上課時間：{self.startTime}\n下課時間：{self.endTime}\n祝您上課愉快！"
 
 class LinkedList:
     def __init__(self, value) -> None:
