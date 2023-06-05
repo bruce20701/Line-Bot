@@ -53,7 +53,6 @@ while True:
    nodeTime = datetime.datetime.strptime(tempNode.startTime, "%H:%M")
    nodeHour = nodeTime.hour
    nodeMinute = nodeTime.minute
-   print((nodeHour * 60 + nodeMinute) - (curHour * 60 + curMinute))
    if curWeekday == 6 or curWeekday == 7:
       break
    if int(curWeekday) == int(tempNode.day) and (nodeHour * 60 + nodeMinute) - (curHour * 60 + curMinute) > 30:
@@ -80,8 +79,6 @@ def checkTime():
       nodeTime = datetime.datetime.strptime(tempNode.startTime, "%H:%M")
       nodeHour = nodeTime.hour
       nodeMinute = nodeTime.minute
-      # print(f"課程時間： Week: {tempNode.day} Hour: {nodeHour} Minute: {nodeMinute}")
-      # print()
       #判斷通知時間
       if int(curWeekday) == int(tempNode.day) and (nodeHour * 60 + nodeMinute) - (curHour * 60 + curMinute) == 30:
          messageStr = tempNode
