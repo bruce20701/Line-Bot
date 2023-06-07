@@ -55,7 +55,7 @@ while True:
    nodeMinute = nodeTime.minute
    if curWeekday == 6 or curWeekday == 7:
       break
-   if int(curWeekday) == int(tempNode.day) and (nodeHour * 60 + nodeMinute) - (curHour * 60 + curMinute) > 30:
+   if (int(tempNode.day) * 24 * 60 + nodeHour * 60 + nodeMinute) - (int(curWeekday) * 24 * 60 + curHour * 60 + curMinute) > 30:
       break
    curNode = curNode.next
    if curNode == None:
@@ -82,7 +82,7 @@ def checkTime():
       nodeHour = nodeTime.hour
       nodeMinute = nodeTime.minute
       #判斷通知時間
-      if int(curWeekday) == int(tempNode.day) and (nodeHour * 60 + nodeMinute) - (curHour * 60 + curMinute) == 20:
+      if (int(tempNode.day) * 24 * 60 + nodeHour * 60 + nodeMinute) - (int(curWeekday) * 24 * 60 + curHour * 60 + curMinute) == 20:
          messageStr = f"{tempNode}"
          line_bot_api.push_message('U3b706ee724da7f1ccaf51c2fb357d507', TextSendMessage(text=messageStr))
          #陣列指標往後移
@@ -137,7 +137,6 @@ def playGame(msg):
          message = f"{countA}A{countB}B"
    except:
       message = "輸入格式有誤，請重新輸入"
-   print(f"輸出結果:{message}")
    return message
 
 # 初始化1A2B遊戲數字
